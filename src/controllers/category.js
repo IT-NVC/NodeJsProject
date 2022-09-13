@@ -20,7 +20,7 @@ const postCategory = async (req,res)=>{
 
         return res.send(util.sendSuccess({category}));
     } catch (error) {
-        throw error
+        return error
     }
 }
 
@@ -31,7 +31,7 @@ const getListCategory = async (req,res)=>{
 
         res.send(util.sendSuccess({categorys}));
     } catch (error) {
-        throw error
+        return error
     }
 }
 
@@ -45,7 +45,7 @@ const getDetailCategory = async (req,res)=>{
 
         return res.send(util.sendSuccess({category}));
     } catch (error) {
-        
+        return error
     }
 }
 
@@ -68,7 +68,7 @@ const updateCategory = async (req,res)=>{
         return res.send(util.sendSuccess({category}));
 
     } catch (error) {
-        throw error
+        return error
     }
 }
 

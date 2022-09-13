@@ -10,7 +10,7 @@ const getDetailUser = async (req,res)=>{
 
     res.send(util.sendSuccess({user}))
   } catch (error) {
-    throw error
+    return error
   }
 }
 
@@ -24,7 +24,10 @@ const updateUser = async (req,res)=>{
         const checkUser = userService.getUserCheck(id);
 
         if(!checkUser){
-            return res.status(404).send(util.sendError(404,"not found!"))
+          throw{
+            code:400,
+            message:"not found!"
+          }
         }
 
         let data;
@@ -51,7 +54,7 @@ const updateUser = async (req,res)=>{
         res.send(util.sendSuccess({idUpdate: id,user}));
       } catch (error) {
         console.log(error)
-        throw error
+        return error
       }
 }
 
@@ -62,14 +65,17 @@ const deleteUser = async(req,res)=>{
           const checkUser = userService.getUserCheck(id);
 
           if(!checkUser){
-              return res.status(404).send(util.sendError(404,"not found!"))
+            throw{
+              code:400,
+              message:"not found!"
+            }
           }
 
           const user = await userService.deleteUser(id);
 
           res.send(util.sendSuccess({idDelete: id, user}));
       } catch (error) {
-              throw error       
+              return error       
       }
 }
 
@@ -78,7 +84,7 @@ const getListUser = async(req,res)=>{
         const users = await userService.getListUser();
         res.send(util.sendSuccess({users}));
     } catch (error) {
-        throw error
+        return error
     }
 }
 module.exports = {

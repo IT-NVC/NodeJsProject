@@ -7,7 +7,7 @@ const getListProduct = async (req,res)=>{
         console.log(products)
         res.send(util.sendSuccess({products})) 
     } catch (error) {
-        throw error
+        return error
     }
 
 }
@@ -20,7 +20,7 @@ const getDetailProduct = async (req,res)=>{
 
         res.send(util.sendSuccess({product}))
     } catch (error) {
-        throw error
+        return error
     }
 }
 
@@ -33,7 +33,7 @@ const getProductInCategory = async (req,res)=>{
 
         res.send(util.sendSuccess({products}))
     } catch (error) {
-        throw error
+        return error
     }
 }
 
@@ -45,12 +45,15 @@ const findProduct = async (req,res)=>{
         const products = await productService.findProduct(name);
 
         if(!products){
-            res.send(util.sendSuccess({message:"Not found product!",products}))
+            throw{
+                code:400,
+                message:"Not found product!"
+            }
         }
         
         res.send(util.sendSuccess({products}))
     } catch (error) {
-        throw error
+        return error
     }
 }
 
@@ -76,7 +79,7 @@ const createProduct = async (req,res)=>{
 
         res.send(util.sendSuccess({product}));
     } catch (error) {
-        throw error
+        return error
     }
 }
 
@@ -97,12 +100,15 @@ const updateProduct = async (req,res)=>{
         const product = productService.updateProduct(id,data);
 
         if(!product){
-            res.send(util.sendSuccess({"message":"id doesn't exists!"}));
+            throw{
+                code: 400,
+                message:"id doesn't exists!"
+            }
         }
 
         res.send(util.sendSuccess({idProduct: id,product}));
     } catch (error) {
-        throw error
+        return error
     }
 }
 
@@ -114,12 +120,15 @@ const deleteProduct = async (req,res)=>{
         const product = await productService.deleteProduct(id);
 
         if(!product){
-            res.send(util.sendSuccess({"message":"id doesn't exists!"}));
+            throw{
+                code:400,
+                message:"id doesn't exists!"
+            }
         }
 
         res.send(util.sendSuccess({idProduct: id,product}));
     } catch (error) {
-        throw error
+        return error
     }
 }
 

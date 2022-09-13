@@ -62,7 +62,7 @@ const createOrder = async (idProduct,idUser,Address,amount)=>{
 
     if(amount>product.quantity){
         throw{
-            "code":500,
+            "code":400,
             "message":"amount invalid!"
         }
     }

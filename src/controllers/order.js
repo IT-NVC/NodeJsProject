@@ -40,7 +40,10 @@ const createOrder = async (req,res)=>{
         const order = await orderService.createOrder(idProduct,idUser,Address,amount);
 
         if(!order){
-            res.send(util.util.sendSuccess({"messgae":"user or product doesn't exists!"}));
+            throw{
+                code:400,
+                messgae:"user or product doesn't exists!"
+            }
         }
 
         res.send(util.sendSuccess({order}));

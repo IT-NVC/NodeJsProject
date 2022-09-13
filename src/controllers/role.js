@@ -10,7 +10,7 @@ const getAllRole = async (req,res)=>{
         }));
     } catch (error) {
         console.log(error)
-        throw error
+        return error
     }
 }
 
@@ -29,7 +29,7 @@ const postRole = async (req,res)=>{
         }));
     } catch (error) {
         console.log(error)
-        throw error
+        return error
     }
 }
 

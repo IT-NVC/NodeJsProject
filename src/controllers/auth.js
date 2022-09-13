@@ -136,8 +136,7 @@ const refreshToken = async (req,res)=>{
             })
           );
     } catch (error) {
-        console.log(error)
-        throw error
+        return error
     }
 }
 
@@ -151,7 +150,10 @@ const register = async (req,res) => {
         roleMember = roleMember[0].dataValues;
 
         if(checkEmail !=0 ){
-            return res.status(409).send(util.sendError(409,"Email already exitsts!"));
+            throw{
+                code:409,
+                message: "Email already exitsts!"
+            }
         }
 
         const {email,password,name,address,phone} = req.body;
@@ -174,7 +176,7 @@ const register = async (req,res) => {
     } catch (error) {
 
         console.log(error);
-        throw error;
+        return error;
     }
 }
 
