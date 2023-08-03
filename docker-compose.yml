@@ -1,0 +1,51 @@
+version: '3.8'
+
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    restart: unless-stopped
+    container_name: mysqldb
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: nodejsproject
+    ports:
+      - 3306:3306
+    volumes:
+      - db:/var/lib/mysql
+    expose:
+      - 3306
+    networks:
+      - app-network 
+
+
+  node-express:
+    # image: node:14-alphine
+    depends_on:
+      - mysqldb
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      MYSQLDB_HOST: mysqldb
+      MYSQLDB_USER: root
+      MYSQLDB_ROOT_PASSWORD: 123456
+      MYSQLDB_DATABASE: nodejsproject
+      MYSQLDB_LOCAL_PORT: 3306
+    ports:
+      - 127.0.0.1:3000:3000
+    stdin_open: true
+    tty: true
+    networks:
+      - app-network 
+
+volumes: 
+  db:
+
+networks:
+  app-network:
+    driver: bridge
